@@ -19,9 +19,21 @@
     //}
   ],
   "outputs": [
+    //{
+    //  "type": "ApplicationInsights",
+    //  "instrumentationKey": "***Add AI Key Here***"
+    //},
     {
-      "type": "ApplicationInsights",
-      "instrumentationKey": "a81dd44f-87f0-479b-82f5-d411f85f233e"
+      //See https://github.com/Azure/diagnostics-eventflow#elasticsearch for required values
+      "type": "ElasticSearch",
+      "indexNamePrefix": "app1",
+      "serviceUri": "https://myElasticSearchCluster:9200",
+      "basicAuthenticationUserName": "esUser1",
+      "basicAuthenticationUserPassword": "<MyPassword>",
+      "eventDocumentTypeName": "diagData",
+      "numberOfShards": 1,
+      "numberOfReplicas": 1,
+      "refreshInterval": "15s"
     }
   ],
   "schemaVersion": "2016-08-11",

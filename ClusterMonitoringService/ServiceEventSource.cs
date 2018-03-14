@@ -169,5 +169,12 @@ namespace ClusterMonitoringService
         }
 #endif
         #endregion
+
+        private const int UnhandledExceptionEventId = 99;
+                [Event(UnhandledExceptionEventId, Level = EventLevel.Error, Message = "An unhandled exception has occurred")]
+        public void UnhandledException(string exception)
+        {
+            WriteEvent(UnhandledExceptionEventId, exception);
+        }
     }
 }
