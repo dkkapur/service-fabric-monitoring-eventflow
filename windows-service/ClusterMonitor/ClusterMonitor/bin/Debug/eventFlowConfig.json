@@ -19,37 +19,40 @@
     //}
   ],
   "outputs": [
-    {
-      "type": "applicationinsights",
-      "instrumentationkey": "***add ai key here***"
-    }
     //{
-    //  //See https://github.com/Azure/diagnostics-eventflow#elasticsearch for required values
-    //  "type": "ElasticSearch",
-    //  "indexNamePrefix": "app1",
-    //  "serviceUri": "https://myElasticSearchCluster:9200",
-    //  "basicAuthenticationUserName": "esUser1",
-    //  "basicAuthenticationUserPassword": "<MyPassword>",
-    //  "eventDocumentTypeName": "diagData",
-    //  "numberOfShards": 1,
-    //  "numberOfReplicas": 1,
-    //  "refreshInterval": "15s"
+    //  "type": "applicationinsights",
+    //  "instrumentationkey": "***add ai key here***"
+    //},
+    {
+      //See https://github.com/Azure/diagnostics-eventflow#elasticsearch for required values
+      "type": "ElasticSearch",
+      "indexNamePrefix": "sf3_",
+      "serviceUri": "http://localhost:9200",
+      //"basicAuthenticationUserName": "esUser1",
+      //"basicAuthenticationUserPassword": "<MyPassword>",
+      "eventDocumentTypeName": "sfData3",
+      "numberOfShards": 1,
+      "numberOfReplicas": 1,
+      "refreshInterval": "15s"
+    }
+    //,{
+    //  "type": "StdOutput"
     //}
   ],
   "schemaVersion": "2016-08-11",
-  // "healthReporter": {
-  //   "type": "CsvHealthReporter",
-  //   "logFileFolder": ".",
-  //   "logFilePrefix": "HealthReport",
-  //   "minReportLevel": "Warning",
-  //   "throttlingPeriodMsec": "1000"
-  // },
-  // "settings": {
-  //    "pipelineBufferSize": "1000",
-  //    "maxEventBatchSize": "100",
-  //    "maxBatchDelayMsec": "500",
-  //    "maxConcurrency": "8",
-  //    "pipelineCompletionTimeoutMsec": "30000"
-  // },
+  //"healthReporter": {
+  //  "type": "CsvHealthReporter",
+  //  "logFileFolder": ".",
+  //  "logFilePrefix": "HealthReport",
+  //  "minReportLevel": "Warning",
+  //  "throttlingPeriodMsec": "1000"
+  //},
+  //"settings": {
+  //  "pipelineBufferSize": "1000",
+  //  "maxEventBatchSize": "100",
+  //  "maxBatchDelayMsec": "500",
+  //  "maxConcurrency": "8",
+  //  "pipelineCompletionTimeoutMsec": "30000"
+  //},
   "extensions": []
 }

@@ -1,14 +1,6 @@
 ﻿using Microsoft.Diagnostics.EventFlow;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
 using System.ServiceProcess;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ClusterMonitor
 {
@@ -33,6 +25,11 @@ namespace ClusterMonitor
         protected override void OnStop()
         {
             _shutdownEvent.Set();
+            // Gives the diagnostics pipeline a 30 sec. timeout to shut down
+            if (!_thread.Join(30000))
+            {
+                _thread.Abort();
+            }
         }
 
         private void StartEventFlowPipeline()
