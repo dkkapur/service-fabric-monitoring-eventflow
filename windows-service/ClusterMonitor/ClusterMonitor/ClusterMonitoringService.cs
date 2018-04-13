@@ -4,40 +4,40 @@ using System.Threading;
 
 namespace ClusterMonitor
 {
-    public partial class clusterMonitoringService : ServiceBase
+    public class ClusterMonitoringService : ServiceBase
     {
-        private ManualResetEvent _shutdownEvent = new ManualResetEvent(false);
-        private Thread _thread;
+        private ManualResetEvent shutdownEvent = new ManualResetEvent(false);
+        private Thread thread;
 
-        public clusterMonitoringService()
+        private static void Main()
         {
-            InitializeComponent();
+            Run(new ClusterMonitoringService());
         }
 
         protected override void OnStart(string[] args)
         {
-            _thread = new Thread(StartEventFlowPipeline);
-            _thread.Name = "Eventflow Worker Thread";
-            _thread.IsBackground = true;
-            _thread.Start();
+            this.thread = new Thread(this.StartEventFlowPipeline)
+            {
+                Name = "Eventflow Worker Thread",
+                IsBackground = true
+            };
+            this.thread.Start();
         }
 
         protected override void OnStop()
         {
-            _shutdownEvent.Set();
+            this.shutdownEvent.Set();
             // Gives the diagnostics pipeline a 30 sec. timeout to shut down
-            if (!_thread.Join(30000))
+            if (!this.thread.Join(30000))
             {
-                _thread.Abort();
+                this.thread.Abort();
             }
         }
 
         private void StartEventFlowPipeline()
         {
-            using (var pipeline = DiagnosticPipelineFactory.CreatePipeline("eventFlowConfig.json"))
-            {
-                _shutdownEvent.WaitOne();
-            }
+            using (DiagnosticPipelineFactory.CreatePipeline("eventFlowConfig.json"))
+                this.shutdownEvent.WaitOne();
         }
     }
 }
